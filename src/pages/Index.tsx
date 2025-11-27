@@ -191,44 +191,36 @@ const Index = () => {
         onMouseDown={handleScrollerMouseDown}
         className="fixed top-0 left-1/2 -translate-x-1/2 z-50 cursor-grab active:cursor-grabbing select-none"
         style={{
-          transform: `translateX(-50%) translateY(${pullDistance * 0.5}px) rotateZ(${scrollerRotation * 0.3}deg)`,
+          transform: `translateX(-50%) translateY(${pullDistance * 0.5}px)`,
           transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
         }}
       >
-        <div className="relative" style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }}>
-          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full"
+        <div className="relative flex gap-6" style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.2))' }}>
+          <div className="relative w-16 h-20 rounded-full"
                style={{
-                 background: 'radial-gradient(circle at 40% 40%, #f5d4c4, #d4a088)',
-                 boxShadow: 'inset -2px -3px 8px rgba(0,0,0,0.2)'
-               }} />
-          
-          <div className="relative w-14 h-32 rounded-full"
-               style={{
-                 background: 'linear-gradient(135deg, #f5d4c4 0%, #e8b89a 30%, #d4a088 60%, #c89078 100%)',
-                 boxShadow: 'inset -3px 0 8px rgba(0,0,0,0.15), inset 3px 0 8px rgba(255,255,255,0.3)',
-                 transform: 'perspective(600px) rotateX(-8deg)'
+                 background: 'radial-gradient(ellipse at 35% 35%, #ffd4e0, #ffb3cc 40%, #ff99bb 100%)',
+                 boxShadow: 'inset -4px -6px 15px rgba(0,0,0,0.15), inset 3px 3px 10px rgba(255,255,255,0.4)',
+                 transform: 'perspective(500px) rotateY(-8deg)'
                }}>
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-20 rounded-full"
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full"
                  style={{
-                   background: 'radial-gradient(ellipse at center, #e8b89a 0%, #d99585 40%, #c87868 100%)',
-                   boxShadow: 'inset 0 -3px 10px rgba(0,0,0,0.3), inset 0 2px 6px rgba(255,255,255,0.2)'
+                   background: 'radial-gradient(circle at 40% 40%, #ff85a8, #e6719a)',
+                   boxShadow: 'inset -1px -1px 4px rgba(0,0,0,0.2)'
                  }} />
-            
-            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-3 h-6 rounded-full opacity-30"
-                 style={{
-                   background: 'linear-gradient(to bottom, transparent, rgba(200, 130, 110, 0.6))'
-                 }} />
-            
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 h-3 rounded-full opacity-20"
-                 style={{ background: 'rgba(0,0,0,0.3)', filter: 'blur(3px)' }} />
           </div>
           
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-16 h-10 rounded-full"
+          <div className="relative w-16 h-20 rounded-full"
                style={{
-                 background: 'radial-gradient(ellipse at center, #e8b89a 0%, #d4a088 50%, #c89078 100%)',
-                 boxShadow: 'inset 0 -4px 12px rgba(0,0,0,0.25)',
-                 transform: 'perspective(400px) rotateX(20deg)'
-               }} />
+                 background: 'radial-gradient(ellipse at 65% 35%, #ffd4e0, #ffb3cc 40%, #ff99bb 100%)',
+                 boxShadow: 'inset 4px -6px 15px rgba(0,0,0,0.15), inset -3px 3px 10px rgba(255,255,255,0.4)',
+                 transform: 'perspective(500px) rotateY(8deg)'
+               }}>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full"
+                 style={{
+                   background: 'radial-gradient(circle at 40% 40%, #ff85a8, #e6719a)',
+                   boxShadow: 'inset -1px -1px 4px rgba(0,0,0,0.2)'
+                 }} />
+          </div>
         </div>
       </div>
       <div className="flex">
