@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,12 +35,6 @@ const Index = () => {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState<'dashboard' | 'tasks' | 'employees'>('dashboard');
   const [isCreateTaskOpen, setIsCreateTaskOpen] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const [pullDistance, setPullDistance] = useState(0);
-  const [scrollerRotation, setScrollerRotation] = useState(0);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const startYRef = useRef(0);
-  const mainRef = useRef<HTMLDivElement>(null);
 
   const [tasks, setTasks] = useState<Task[]>([
     {
@@ -148,81 +142,8 @@ const Index = () => {
     completionRate: Math.round((tasks.filter(t => t.status === 'completed').length / tasks.length) * 100)
   };
 
-  const handleScrollerMouseDown = (e: React.MouseEvent) => {
-    setIsDragging(true);
-    startYRef.current = e.clientY;
-  };
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging || !mainRef.current) return;
-      
-      const deltaY = e.clientY - startYRef.current;
-      setPullDistance(Math.max(0, deltaY));
-      setScrollerRotation(deltaY * 0.5);
-      
-      if (deltaY > 0) {
-        mainRef.current.scrollTop += deltaY * 0.3;
-        startYRef.current = e.clientY;
-      }
-    };
-
-    const handleMouseUp = () => {
-      setIsDragging(false);
-      setPullDistance(0);
-      setScrollerRotation(0);
-    };
-
-    if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
-    }
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isDragging]);
-
   return (
     <div className="min-h-screen bg-background relative">
-      <div 
-        ref={scrollerRef}
-        onMouseDown={handleScrollerMouseDown}
-        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 cursor-grab active:cursor-grabbing select-none"
-        style={{
-          transform: `translateX(-50%) translateY(${pullDistance * 0.5}px)`,
-          transition: isDragging ? 'none' : 'transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)'
-        }}
-      >
-        <div className="relative flex gap-6" style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.2))' }}>
-          <div className="relative w-16 h-20 rounded-full"
-               style={{
-                 background: 'radial-gradient(ellipse at 35% 35%, #ffd4e0, #ffb3cc 40%, #ff99bb 100%)',
-                 boxShadow: 'inset -4px -6px 15px rgba(0,0,0,0.15), inset 3px 3px 10px rgba(255,255,255,0.4)',
-                 transform: 'perspective(500px) rotateY(-8deg)'
-               }}>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full"
-                 style={{
-                   background: 'radial-gradient(circle at 40% 40%, #ff85a8, #e6719a)',
-                   boxShadow: 'inset -1px -1px 4px rgba(0,0,0,0.2)'
-                 }} />
-          </div>
-          
-          <div className="relative w-16 h-20 rounded-full"
-               style={{
-                 background: 'radial-gradient(ellipse at 65% 35%, #ffd4e0, #ffb3cc 40%, #ff99bb 100%)',
-                 boxShadow: 'inset 4px -6px 15px rgba(0,0,0,0.15), inset -3px 3px 10px rgba(255,255,255,0.4)',
-                 transform: 'perspective(500px) rotateY(8deg)'
-               }}>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full"
-                 style={{
-                   background: 'radial-gradient(circle at 40% 40%, #ff85a8, #e6719a)',
-                   boxShadow: 'inset -1px -1px 4px rgba(0,0,0,0.2)'
-                 }} />
-          </div>
-        </div>
-      </div>
       <div className="flex">
         <aside className="w-64 min-h-screen bg-sidebar border-r border-sidebar-border">
           <div className="p-6">
@@ -273,7 +194,7 @@ const Index = () => {
           </div>
         </aside>
 
-        <main ref={mainRef} className="flex-1 p-8 overflow-y-auto max-h-screen">
+        <main className="flex-1 p-8">
           {activeTab === 'dashboard' && (
             <div className="space-y-6 animate-fade-in">
               <div>
